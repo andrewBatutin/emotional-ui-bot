@@ -34,6 +34,7 @@ def phu(message):
         toxic_count = 0
 
         bot.send_message(message.chat.id, '@Wild314HackSuperRes_bot says:')
+        bot.send_message(message.chat.id, '🤮')
         bot.send_animation(message.chat.id, img_for_reaction[img_indx])
 
 
