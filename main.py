@@ -28,28 +28,34 @@ def phu(message):
 
     words = message.text
     words = re.sub("[^а-яА-Я ]+", "", words).strip()
-    is_toxic_msg = is_toxic(send_message_for_inference(words))
+    inf_res = send_message_for_inference(words)
+    is_toxic_msg = is_toxic(inf_res)
+    is_flirt_msg = is_flirt(inf_res)
     print(words)
     print(is_toxic_msg)
-    if is_toxic_msg:
+
+    if is_flirt_msg:
+        img_indx = random.randint(0, len(img_for_flirt) - 1)
+        bot.send_message(message.chat.id, '@Wild314HackSuperRes_bot says:')
+        bot.send_message(message.chat.id, '❤️')
+        bot.send_animation(message.chat.id, img_for_flirt[img_indx])
+    elif is_toxic_msg:
         img_indx = random.randint(0,len(img_for_reaction) - 1)
         bot.send_message(message.chat.id, '@Wild314HackSuperRes_bot says:')
         bot.send_message(message.chat.id, '🤮')
         bot.send_animation(message.chat.id, img_for_reaction[img_indx])
 
 
-
 def is_toxic(results):
     item = results[-1]
     sentiment = item.get('label', LABEL_NORMAL)
     print(sentiment)
     return sentiment not in normal_labels
 
-def is_toxic(results):
+def is_flirt(results):
     item = results[-1]
     sentiment = item.get('label', LABEL_NORMAL)
-    print(sentiment)
-    return sentiment not in normal_labels
+    return sentiment in flirt_labels
 
 
 if __name__ == "__main__":
