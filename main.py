@@ -4,28 +4,33 @@ import telebot
 import requests
 from boto_req_endpoint import send_message_for_inference
 
-
-# {'label': 'LABEL_0', 'score': 0.9968411326408386}
 LABEL_NORMAL = 'LABEL_0'
 normal_labels = ['LABEL_0', 'LABEL_18']
 flirt_labels = ['LABEL_5', 'LABEL_6']
 token = '1928238940:AAH6GLnnthf1yek4jX71OgH1BEtstQ8ZYmE'
 
-img_for_reaction = ['https://media1.giphy.com/media/JdSUpdPV4iPxm84oJF/giphy.gif?cid=790b7611898a73b8ab209b363288b65927bdd4d15c75f3d1&rid=giphy.gif&ct=g',
-                    'https://media3.giphy.com/media/vLPPebBAjmsFr2Tgob/giphy.gif?cid=790b7611b5fac8ddff08370d3618a51a6b9e4e38027cd537&rid=giphy.gif&ct=g',
-                    'https://media1.giphy.com/media/JdSUpdPV4iPxm84oJF/giphy.gif?cid=790b7611898a73b8ab209b363288b65927bdd4d15c75f3d1&rid=giphy.gif&ct=g']
+img_for_reaction = [
+    'https://media4.giphy.com/media/u7VvSQke5wsIiUlRdE/giphy.gif?cid=790b7611b7a75294d0c2e418626fecb46f264c1c0ea66f00&rid=giphy.gif&ct=g',
+    'https://media3.giphy.com/media/2fW7VB8VeHEoVIPjWB/giphy.gif?cid=790b7611ca4a6b3e3294ce46476b42f761c781e084daf732&rid=giphy.gif&ct=g',
+    'https://media3.giphy.com/media/JxJjfVsRypMUvI0xKQ/giphy.gif?cid=790b761124f2b512c4a77850466a557bc4da80d2dd151feb&rid=giphy.gif&ct=g',
+    'https://media3.giphy.com/media/wCnzMKw34Mc0A1tvuv/giphy.gif?cid=790b76117ff5fc5988e93b8c5846c9f8d79f898bb35107ae&rid=giphy.gif&ct=g',
+    'https://media1.giphy.com/media/JdSUpdPV4iPxm84oJF/giphy.gif?cid=790b7611898a73b8ab209b363288b65927bdd4d15c75f3d1&rid=giphy.gif&ct=g',
+    'https://media3.giphy.com/media/vLPPebBAjmsFr2Tgob/giphy.gif?cid=790b7611b5fac8ddff08370d3618a51a6b9e4e38027cd537&rid=giphy.gif&ct=g',
+    'https://media1.giphy.com/media/JdSUpdPV4iPxm84oJF/giphy.gif?cid=790b7611898a73b8ab209b363288b65927bdd4d15c75f3d1&rid=giphy.gif&ct=g']
 
-img_for_flirt = ['https://media3.giphy.com/media/RHrnUvQcIfgj6FAFiO/giphy.gif?cid=790b7611735d8b11bca24306f8268049522739a10c56d3bc&rid=giphy.gif&ct=g',
-                 'https://media0.giphy.com/media/3SiLCCMCw0DLTdpdxQ/giphy.gif?cid=790b761120c548ec105bd6555ae1726682c9a3e1cf5867fb&rid=giphy.gif&ct=g',
-                 'https://media1.giphy.com/media/VZHVRHe1L5l6dhD7l5/giphy.gif?cid=790b7611c910b52819dc368ad5d7265d993309ebd2b5ac6a&rid=giphy.gif&ct=g'
-                 ]
+img_for_flirt = [
+    'https://media4.giphy.com/media/KmWnPq5c5CSIH9zkEU/giphy.gif?cid=790b7611ebe389d49b5dfd4c1bd3410f5d72485a7f77b4bb&rid=giphy.gif&ct=g',
+    'https://media3.giphy.com/media/RHrnUvQcIfgj6FAFiO/giphy.gif?cid=790b7611735d8b11bca24306f8268049522739a10c56d3bc&rid=giphy.gif&ct=g',
+    'https://media0.giphy.com/media/3SiLCCMCw0DLTdpdxQ/giphy.gif?cid=790b761120c548ec105bd6555ae1726682c9a3e1cf5867fb&rid=giphy.gif&ct=g',
+    'https://media1.giphy.com/media/VZHVRHe1L5l6dhD7l5/giphy.gif?cid=790b7611c910b52819dc368ad5d7265d993309ebd2b5ac6a&rid=giphy.gif&ct=g'
+    ]
 
 bot = telebot.TeleBot(token)
+
 
 # main looppy
 @bot.message_handler(content_types="text")
 def phu(message):
-
     words = message.text
     words = re.sub("[^а-яА-Я ]+", "", words).strip()
     inf_res = send_message_for_inference(words)
@@ -40,7 +45,7 @@ def phu(message):
         bot.send_message(message.chat.id, '❤️')
         bot.send_animation(message.chat.id, img_for_flirt[img_indx])
     elif is_toxic_msg:
-        img_indx = random.randint(0,len(img_for_reaction) - 1)
+        img_indx = random.randint(0, len(img_for_reaction) - 1)
         bot.send_message(message.chat.id, '@Wild314HackSuperRes_bot says:')
         bot.send_message(message.chat.id, '🤮')
         bot.send_animation(message.chat.id, img_for_reaction[img_indx])
@@ -51,6 +56,7 @@ def is_toxic(results):
     sentiment = item.get('label', LABEL_NORMAL)
     print(sentiment)
     return sentiment not in normal_labels
+
 
 def is_flirt(results):
     item = results[-1]
