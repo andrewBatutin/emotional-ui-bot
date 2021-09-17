@@ -47,8 +47,8 @@ def getSignatureKey(key, date_stamp, regionName, serviceName):
 
 # Read AWS access key from env. variables or configuration file. Best practice is NOT
 # to embed credentials in code.
-access_key = 'AKIA2RMXBAFOHKEXVRXC'
-secret_key = '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'
+access_key = '<key>'
+secret_key = '<key>'
 if access_key is None or secret_key is None:
     print('No access key is available.')
     sys.exit()

@@ -7,7 +7,7 @@ from boto_req_endpoint import send_message_for_inference
 LABEL_NORMAL = 'LABEL_0'
 normal_labels = ['LABEL_0', 'LABEL_18']
 flirt_labels = ['LABEL_5', 'LABEL_6', 'LABEL_11', 'LABEL_78']
-token = '1928238940:AAH6GLnnthf1yek4jX71OgH1BEtstQ8ZYmE'
+token = '<token>'
 
 img_for_reaction = [
     'https://media4.giphy.com/media/u7VvSQke5wsIiUlRdE/giphy.gif?cid=790b7611b7a75294d0c2e418626fecb46f264c1c0ea66f00&rid=giphy.gif&ct=g',
